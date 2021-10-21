@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Echart from '@/components/echart'
+import Echart from '@/common/echart'
 export default {
     data() {
         return{

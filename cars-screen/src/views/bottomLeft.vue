@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import BottomLeftChart from '@/components/echart/bottom/bottomLeftChart'
+import BottomLeftChart from '@/components/bottom/bottomLeftChart'
 export default {
   components: {
     BottomLeftChart

@@ -32,9 +32,9 @@ import Chart from './chart.vue'
     },
     methods: {
         drawTimingFn() {
-            this.setDta();
+            this.setData();
             this.drawTiming  = setInterval(()=>{
-                this.setDta();
+                this.setData();
             },6000)
         },
         setData () {

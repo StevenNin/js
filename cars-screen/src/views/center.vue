@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import CenterChart from '@/components/echart/center/centerChartRate'
+import CenterChart from '@/components/center'
 
 export default {
   data() {
