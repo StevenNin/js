@@ -19,6 +19,9 @@ export default {
   margin: 0;
   padding: 0;
 }
+body{
+  scroll-behavior: smooth;
+}
 
 .el-menuNav:not(.el-menu--collapse) {
     width: 100%;
