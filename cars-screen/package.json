@@ -13,6 +13,7 @@
   "dependencies": {
     "@jiaminghi/data-view": "^2.10.0",
     "echarts": "^5.2.1",
+    "less-loader": "^10.0.1",
     "vue": "^2.5.2",
     "vue-awesome": "^4.3.1",
     "vue-router": "^3.0.1"
