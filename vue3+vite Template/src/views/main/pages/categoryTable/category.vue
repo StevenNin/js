@@ -18,7 +18,7 @@
       <li
         v-for="item in list"
         :key="item.id"
-        :class="{ active: item.id === active.id }"
+        :class="{ active: item.id === active.id+1 }"
         @click="changeActive(item)"
       >
         <span>{{ item.name }}</span>
@@ -91,6 +91,15 @@ export default defineComponent({
     }
     getCategoryData(true);
     
+    const toUp = ()=>{
+      console.log('子组件')
+      active.value.id -= 1
+    }
+    const toDown = ()=>{
+      console.log(active.value,list,2222)
+      active.value.id +=1
+      active.value = list.value[(active.value.id - 100)]
+    }
     return {
       listDom,
       loading,
@@ -100,7 +109,9 @@ export default defineComponent({
       active,
       getCategoryData,
       searchData,
-      changeActive
+      changeActive,
+      toUp,
+      toDown
     };
   },
 });

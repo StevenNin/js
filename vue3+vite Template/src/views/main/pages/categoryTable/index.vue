@@ -1,10 +1,13 @@
 <template>
   <div class="full">
     <div class="left">
-      <category />
+      <category  ref="list"/>
     </div>
     <div class="content">
       <my-table />
+    </div>
+    <div>
+      <funcBtns  @upDo='upClick' @downDo='downClick' />
     </div>
   </div>
 </template>
@@ -13,15 +16,32 @@
 import { defineComponent, ref, provide } from 'vue'
 import Category from './category.vue'
 import myTable from './my-table.vue'
+import funcBtns from '@/components/funcBtn/index.vue'
 export default defineComponent({
   name: 'categoryTable',
   components: {
     Category,
     myTable,
+    funcBtns,
   },
   setup() {
     let active = ref({})
     provide('active', active)
+    const list =ref()
+    const upClick =()=>{
+      list.value.toUp()
+    }
+    const downClick  = ()=>{
+      list.value.toDown()
+      // this.refs.list.toDown()
+  }
+
+    return {
+      list,
+      active,
+      upClick,
+      downClick,
+    }
   }
 })
 </script>
