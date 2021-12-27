@@ -4,6 +4,7 @@
         <el-button type="primary" icon="el-icon-arrow-down" @click="down"></el-button>
         <el-button type="primary" icon="el-icon-arrow-left" @click="left"></el-button>
         <el-button type="primary" icon="el-icon-arrow-right" @click="right"></el-button>
+        <el-button type="primary"  @click="ok">OK</el-button>
     </div>
 </template>
 
@@ -14,6 +15,11 @@ import { defineComponent ,ref } from 'vue'
 export default defineComponent({
     name:'funcBtns',
     setup(props, ctx) {
+        const ok = ()=> {
+            console.log('ok')
+            // ctx.emit('okDo', true)
+            // emit("downDo")
+        };
         const up = ()=>{
             console.log('up')
             ctx.emit('upDo', true)
@@ -33,7 +39,8 @@ export default defineComponent({
             up,
             down,
             left,
-            right
+            right,
+            ok
         }
     },
 })
