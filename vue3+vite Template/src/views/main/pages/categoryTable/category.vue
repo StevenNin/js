@@ -16,10 +16,10 @@
       style="overflow: auto"
     >
       <li
-        v-for="item in list"
+        v-for="(item,i) in list"
         :key="item.id"
-        :class="{ active: item.id === active.id+1 }"
-        @click="changeActive(item)"
+        :class="{ active: item.id === active.id }"
+        @click="changeActive(item,i)"
       >
         <span>{{ item.name }}</span>
       </li>
@@ -41,6 +41,7 @@ export default defineComponent({
       size: 30,
       total: 0,
     };
+    const CurNum = ref(0)
     let input = ref("");
     let list = ref([]);
     let firstLoading = ref(true);
@@ -86,19 +87,30 @@ export default defineComponent({
       })
     };
     const searchData = debounce(300, getCategoryData);
-    const changeActive = (row) => {
+    const changeActive = (row,i) => {
       active.value = row
-    }
+      CurNum.value = i
+    };
     getCategoryData(true);
     
+    // 功能键控制
     const toUp = ()=>{
       console.log('子组件')
-      active.value.id -= 1
-    }
+      if(CurNum.value>0){
+        active.value = list.value[(CurNum.value -= 1)]
+      }
+    };
     const toDown = ()=>{
-      console.log(active.value,list,2222)
-      active.value.id +=1
-      active.value = list.value[(active.value.id - 100)]
+      console.log(list.value.length,2222)
+      if(CurNum.value < list.value.length){
+        active.value = list.value[(CurNum.value += 1)]
+      }
+    };
+    const toLeft = () =>{
+      console.log('left')
+    };
+    const toRight  = ()=>{
+      console.log('right')
     }
     return {
       listDom,
@@ -111,7 +123,10 @@ export default defineComponent({
       searchData,
       changeActive,
       toUp,
-      toDown
+      toDown,
+      CurNum,
+      toLeft,
+      toRight
     };
   },
 });

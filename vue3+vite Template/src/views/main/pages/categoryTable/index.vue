@@ -7,7 +7,7 @@
       <my-table />
     </div>
     <div>
-      <funcBtns  @upDo='upClick' @downDo='downClick' />
+      <funcBtns  @upDo='upClick' @downDo='downClick' @leftDo='leftClick' @rightDo='rightClick' />
     </div>
   </div>
 </template>
@@ -33,14 +33,21 @@ export default defineComponent({
     }
     const downClick  = ()=>{
       list.value.toDown()
-      // this.refs.list.toDown()
-  }
+    }
+    const leftClick  = ()=>{
+      list.value.toRight()
+    }
+    const rightClick  = ()=>{
+      list.value.toLeft()
+    }
 
     return {
       list,
       active,
       upClick,
       downClick,
+      leftClick,
+      rightClick
     }
   }
 })
