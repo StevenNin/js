@@ -23,14 +23,19 @@ export default ({ command }) => {
       host: '0.0.0.0',
       open: true,
       proxy: { // 代理配置
-        '/dev': 'https://www.fastmock.site/mock/48cab8545e64d93ff9ba66a87ad04f6b/'
+        '/dev-api': {
+          target: 'http://192.168.88.51:8090/',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/dev-api/, ''),
+          ws: false
+        },
       },
     },
     build: {
       rollupOptions: {
         output: {
           manualChunks: {
-            
+
           }
         }
       }

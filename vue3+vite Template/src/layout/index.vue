@@ -1,33 +1,31 @@
 <template>
-  <el-container style="height: 100vh">
-    <div
+  <el-container 
+    :style="{ backgroundImage: 'url( ' + bgUrl + ' )',height:'100vh',zIndex:'10' ,backgroundSize:'100% 100%'}"
+    >
+    <hade />
+    <!-- <div
       class="mask"
       v-show="!isCollapse && !contentFullScreen"
       @click="hideMenu"
-    ></div>
-    <el-aside
+    ></div> -->
+    <!-- <el-aside
       :width="isCollapse ? '60px' : '250px'"
       :class="isCollapse ? 'hide-aside' : 'show-side'"
       v-show="!contentFullScreen"
     >
       <Logo v-if="showLogo" />
       <Menu />
-    </el-aside>
+    </el-aside> -->
+    <homeReturn />
     <el-container>
-      <el-header v-show="!contentFullScreen">
+      <!-- <el-header v-show="!contentFullScreen">
         <Header />
-      </el-header>
-      <Tabs v-show="showTabs" />
+      </el-header> -->
+      <!-- <Tabs v-show="showTabs" /> -->
       <el-main>
         <router-view v-slot="{ Component, route }">
-          <transition
-            :name="route.meta.transition || 'fade-transform'"
-            mode="out-in"
-          >
-            <keep-alive
-              v-if="keepAliveComponentsName"
-              :include="keepAliveComponentsName"
-            >
+          <transition :name="route.meta.transition || 'fade-transform'" mode="out-in">
+            <keep-alive v-if="keepAliveComponentsName" :include="keepAliveComponentsName">
               <component :is="Component" :key="route.fullPath" />
             </keep-alive>
             <component v-else :is="Component" :key="route.fullPath" />
@@ -39,23 +37,30 @@
 </template>
 
 <script>
-import { defineComponent, computed, onBeforeMount, onUnmounted } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { useEventListener } from "@vueuse/core";
-import Menu from "./Menu/index.vue";
-import Logo from "./Logo/index.vue";
-import Header from "./Header/index.vue";
-import Tabs from "./Tabs/index.vue";
+import { defineComponent, computed, onBeforeMount, onUnmounted ,ref} from 'vue';
+import { useStore } from 'vuex';
+import homeReturn from '@/components/homeReturn/index.vue';
+import { useRoute } from 'vue-router';
+import { useEventListener } from '@vueuse/core';
+import Menu from './Menu/index.vue';
+import Logo from './Logo/index.vue';
+import Header from './Header/index.vue';
+import Tabs from './Tabs/index.vue';
+import hade from '@/components/haders/index.vue';
+import { getImg } from '@/api/backGroud.js'
 export default defineComponent({
   components: {
     Menu,
     Logo,
     Header,
     Tabs,
+    homeReturn,
+    hade,
   },
   setup() {
     const store = useStore();
+    const bgUrl = ref('')
+    const route = useRoute()
     // computed
     const isCollapse = computed(() => store.state.app.isCollapse);
     const contentFullScreen = computed(() => store.state.app.contentFullScreen);
@@ -65,33 +70,38 @@ export default defineComponent({
     // 页面宽度变化监听后执行的方法
     const resizeHandler = () => {
       if (document.body.clientWidth <= 1000 && !isCollapse.value) {
-        store.commit("app/isCollapseChange", true);
+        store.commit('app/isCollapseChange', true);
       } else if (document.body.clientWidth > 1000 && isCollapse.value) {
-        store.commit("app/isCollapseChange", false);
+        store.commit('app/isCollapseChange', false);
       }
     };
+    // 获取背景图片
+    getImg({bType:2}).then(res=>{
+      bgUrl.value  = res.data.filePath
+    }).catch(error=>{
+      console.log(error)
+    })
     // 初始化调用
     resizeHandler();
     // beforeMount
     onBeforeMount(() => {
       // 监听页面变化
-      useEventListener("resize", resizeHandler);
-      useEventListener('unload', unloadHandler)
+      useEventListener('resize', resizeHandler);
+      useEventListener('unload', unloadHandler);
     });
 
     // onUnmounted(()=>{
     //   localStorage.removeItem('vuex')
-    //   console.log('2222222!')
     // })
     // methods
     // 隐藏菜单
     const hideMenu = () => {
-      store.commit("app/isCollapseChange", true);
+      store.commit('app/isCollapseChange', true);
     };
-    // 关闭页面
-    const unloadHandler = ()=>{
-      localStorage.removeItem('vuex')
-    }
+    // 关闭页面  清除cookie Token
+    const unloadHandler = () => {
+      localStorage.removeItem('vuex');
+    };
     return {
       isCollapse,
       showLogo,
@@ -99,6 +109,8 @@ export default defineComponent({
       contentFullScreen,
       keepAliveComponentsName,
       hideMenu,
+      bgUrl,
+      route
     };
   },
 });
@@ -120,7 +132,7 @@ export default defineComponent({
   }
 }
 .el-main {
-  background-color: var(--system-container-background);
+  // background-color: var(--system-container-background);
   height: 100%;
   padding: 0;
 }

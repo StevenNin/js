@@ -2,11 +2,11 @@ import axios from 'axios'
 import store from '@/store'
 import { ElMessage } from 'element-plus'
 const baseURL = import.meta.env.VITE_BASE_URL
-
 const service = axios.create({
   baseURL: baseURL,
   timeout: 5000
 })
+
 
 // 请求前的统一处理
 service.interceptors.request.use(
@@ -26,7 +26,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data
-    if (res.code === 200) {
+    if (response.status === 200 || res.status === 200) {
       return res
     } else {
       showError(res)
@@ -42,6 +42,7 @@ service.interceptors.response.use(
   }
 )
 
+
 function showError(error) {
   if (error.code === 403) {
     // to re-login
@@ -53,7 +54,7 @@ function showError(error) {
       duration: 3 * 1000
     })
   }
-  
+
 }
 
 export default service

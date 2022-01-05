@@ -36,7 +36,7 @@ const drag = {
     header.addEventListener('mousedown', mouseDown)
     document.addEventListener('mousemove', mouseMove)
     document.addEventListener('mouseup', mouseUp)
-    window.addEventListener('resize', sizeChange)
+    // window.addEventListener('resize', sizeChange)
     // 边界处理，防止拖动位置溢出
     function handlePosition() {
       if (data.mouse.x - data.drag.x >= data.dialog.x) {
@@ -106,7 +106,7 @@ const drag = {
     document.removeEventListener('mousedown', el.__mouseDown__)
     document.removeEventListener('mousemove', el.__mouseMove__)
     document.removeEventListener('mouseup', el.__mouseUp__)
-    window.removeEventListener('resize', el.__sizeChange__)
+    // window.removeEventListener('resize', el.__sizeChange__)
   }
 }
 

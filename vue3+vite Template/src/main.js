@@ -8,12 +8,17 @@ import './assets/style/common.scss' // 公共css
 import App from './App.vue'
 import store from './store'
 import router from './router'
+
+import funcBtns from '@/components/funcBtn/index.vue'
+
 // if (import.meta.env.MODE !== 'development') { // 非开发环境调用百度统计
 //   baidu()
 // }
 const app = createApp(App)
+app.config.warnHandler = () => null;
 app.use(ElementPlus, { size: store.state.app.elementSize })
 app.use(store)
 app.use(router)
+app.component('funcBtns', funcBtns)
 // app.config.performance = true
 app.mount('#app')

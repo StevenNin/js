@@ -6,6 +6,12 @@ const state = () => ({
   showTabs: true, // 是否显示导航历史
   expandOneMenu: true, // 一次是否只能展开一个菜单
   elementSize: 'mini', // element默认尺寸，支持官网四个大小参数
+  breadMenu:{
+    host: '主页',
+    menu1: '',
+    menu2: '',
+    menu3: '',
+  },
   theme: {
     state: {
       style: 'default',
@@ -28,6 +34,9 @@ const mutations = {
   },
   stateChange(state, option) {
     state[option.name] = option.value
+  },
+  breadMenuChange(state, value){
+    state.breadMenu = value
   }
 }
 
